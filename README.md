@@ -5,7 +5,7 @@ ELK on ubuntu:
 Install ELK in this order => java -> nginx -> Elasticsearch -> Kibana -> logstash -> beats
 
 Install java:
-sudo apt update
+sudo apt update\n
 apt install default-jdk
 java -version
 
