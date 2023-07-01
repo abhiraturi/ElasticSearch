@@ -2,7 +2,7 @@
 
 ELK on ubuntu:
 
-Install ELK in this order => java -> nginx -> Elasticsearch -> Kibana -> logstash -> beats
+Install ELK in this order => **java -> nginx -> Elasticsearch -> Kibana -> logstash -> beats**
 
 Install java:  
 sudo apt update  
@@ -29,63 +29,63 @@ apt install kibana
 systemctl enable kibana  
 systemctl status kibana  
 
-Installing Logstash:
-apt install logstash
-systemctl status logstash
+Installing Logstash:  
+apt install logstash  
+systemctl status logstash  
 
 
-After downloading and installing in above order perform below steps:
+After downloading and installing in above order perform below steps:  
 
-Configure ElasticSearch:
-Edit /etc/elasticsearch/elasaticsearch.yml
-uncomment cluster.name, node.name
-uncomment network.host and edit the IP with the Ip of server or local host
-uncomment http.port
+Configure ElasticSearch:  
+Edit /etc/elasticsearch/elasaticsearch.yml  
+uncomment cluster.name, node.name  
+uncomment network.host and edit the IP with the Ip of server or local host  
+uncomment http.port  
 
-Now save the file  and
-enable elasticsearch:systemctl enable elasticsearch
-start the elasticsearch: systemctl start elasticsearch
-
-
-Configure Kibana:
-Edit /etc/kibana/kibana.yml 
-uncomment server.port
-uncomment server.host and edit the IP with the Ip of server or localhost
-uncomment http.port
-
-Now save the file and start the kibana: systemctl start kibana
+Now save the file  and  
+enable elasticsearch:systemctl enable elasticsearch  
+start the elasticsearch: systemctl start elasticsearch  
 
 
-In order to setup passowrd to access kibana:
-Install apache utils: sudo apt-get install -y apache2-utils
+Configure Kibana:  
+Edit /etc/kibana/kibana.yml   
+uncomment server.port  
+uncomment server.host and edit the IP with the Ip of server or localhost  
+uncomment http.port  
 
-Generate password:
-htpasswd -c /etc/nginx/htpasswd.users kibadmin
-enter password
-
-Because Kibana is configured to only listen on localhost, we must set up a reverse proxy to allow external access to it. 
-We will use Nginx for this purpose, which should already be installed on your server.
-
-Now configure nginx default file to connect nginx with kibana
-
-Edit /etc/nginx/sites-available/default
-update server_name with public IP address of kibana
-auth_basic_user_file /etc/nginx/htpasswd.users
+Now save the file and start the kibana: systemctl start kibana  
 
 
-Now start nginx: systemctl start nginx
+In order to setup passowrd to access kibana:  
+Install apache utils: sudo apt-get install -y apache2-utils  
 
-Access the UI using public IP on port 80 (traffic goes nginx -> kibana)
+Generate password:  
+htpasswd -c /etc/nginx/htpasswd.users kibadmin  
+enter password  
+
+Because Kibana is configured to only listen on localhost, we must set up a reverse proxy to allow external access to it.   
+We will use Nginx for this purpose, which should already be installed on your server.  
+
+Now configure nginx default file to connect nginx with kibana  
+
+Edit /etc/nginx/sites-available/default  
+update server_name with public IP address of kibana  
+auth_basic_user_file /etc/nginx/htpasswd.users  
 
 
-1. Ingest static apache access logs using logstash and visualize iin kibana:
-Steps:
-Download sample apache logs: wget https://logz.io/sample-data
+Now start nginx: systemctl start nginx  
 
-Now go to /etc/logstash/conf.d
+Access the UI using public IP on port 80 (traffic goes nginx -> kibana)  
 
-Create a file: vi apachelog.conf
-we need to create a pipeline in this file, pipeline will input/source of data, filter and output (where to send)
+
+1. Ingest static apache access logs using logstash and visualize iin kibana:  
+Steps:  
+Download sample apache logs: wget https://logz.io/sample-data  
+
+Now go to /etc/logstash/conf.d  
+
+Create a file: vi apachelog.conf  
+we need to create a pipeline in this file, pipeline will input/source of data, filter and output (where to send)  
 
 input{
  file{
