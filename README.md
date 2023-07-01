@@ -4,19 +4,19 @@ ELK on ubuntu:
 
 Install ELK in this order => **java -> nginx -> Elasticsearch -> Kibana -> logstash -> beats**
 
-**Install java:  **  
+**Install java:**  
 sudo apt update  
 apt install default-jdk  
 java -version
 
 
-**Installing nginx:  **  
+**Installing nginx:**    
 apt-get install nginx  
 nginx -v  
 systemctl status nginx
 
 
-**Installing ElasticSearch:  **  
+**Installing ElasticSearch:**    
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg  
 apt-get install apt-transport-https  
 echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list  
@@ -29,14 +29,14 @@ apt install kibana
 systemctl enable kibana  
 systemctl status kibana  
 
-**Installing Logstash:  **
+**Installing Logstash:**  
 apt install logstash  
 systemctl status logstash  
 
 
-**After downloading and installing in above order perform below steps:  **
+**After downloading and installing in above order perform below steps:**  
 
-**Configure ElasticSearch:  **
+**Configure ElasticSearch:**  
 Edit /etc/elasticsearch/elasaticsearch.yml  
 uncomment cluster.name, node.name  
 uncomment network.host and edit the IP with the Ip of server or local host  
@@ -47,7 +47,7 @@ enable elasticsearch:systemctl enable elasticsearch
 start the elasticsearch: systemctl start elasticsearch  
 
 
-**Configure Kibana:  **
+**Configure Kibana:**  
 Edit /etc/kibana/kibana.yml   
 uncomment server.port  
 uncomment server.host and edit the IP with the Ip of server or localhost  
@@ -66,7 +66,7 @@ enter password
 Because Kibana is configured to only listen on localhost, we must set up a reverse proxy to allow external access to it.   
 We will use Nginx for this purpose, which should already be installed on your server.  
 
-**Now configure nginx default file to connect nginx with kibana  **
+**Now configure nginx default file to connect nginx with kibana**  
 
 Edit /etc/nginx/sites-available/default  
 update server_name with public IP address of kibana  
@@ -77,7 +77,7 @@ Now start nginx: systemctl start nginx
 Access the UI using public IP on port 80 (traffic goes nginx -> kibana)  
 
 
-**1. Ingest static apache access logs using logstash and visualize iin kibana:  **
+**1. Ingest static apache access logs using logstash and visualize iin kibana:**  
 Steps:  
 Download sample apache logs: wget https://logz.io/sample-data  
 
@@ -163,7 +163,7 @@ Save the file and restart logstash: systemctl restart logstash
 Create index pattern and start visualizing the csv data in kibana.  
 
 
-**3. Using filebeats to send realtime data directly to elasticsearch without using logstash  **
+**3. Using filebeats to send realtime data directly to elasticsearch without using logstash**  
 You do not have to wrote pipleing when using beats  
 list enabled and disabled modules: filebeat modules list  
 Enable nginx and system module: filebeat  modules enable nginx and filebeat  modules enable system  
